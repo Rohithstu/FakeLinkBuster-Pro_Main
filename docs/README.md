@@ -188,32 +188,49 @@ URL → Feature Engineering → ML Prediction → Risk Score → Secure Response
 ```bash
 git clone https://github.com/Rohithstu/FakeLinkBuster-Pro_Main.git
 cd FakeLinkBuster-Pro_Main
-2️⃣ Backend Setup
+```
+
+---
+
+### 2️⃣ Backend Setup
+
+```bash
 cd backend
 pip install -r requirements.txt
 python app_upgraded.py
-3️⃣ Load Browser Extension
-Open Chrome → Extensions
+```
 
-Enable Developer Mode
+---
 
-Click "Load Unpacked"
+### 3️⃣ Load Browser Extension
 
-Select browser-extension folder
+1. Open Chrome → Extensions  
+2. Enable Developer Mode  
+3. Click **Load Unpacked**  
+4. Select `browser-extension` folder  
 
-<br> <div align="center"> <h2>🤝 <b>Contributing</b></h2> </div> <p align="center">
-Fork the repository • Create a feature branch • Commit changes • Submit PR
+<br>
 
-We welcome improvements and new ideas 🚀
-
-</p>
-<br> <div align="center"> <h2>📜 <b>License</b></h2>
-MIT License
-
+<div align="center">
+<h2>🤝 <b>Contributing</b></h2>
 </div>
-<br> <div align="center"> <h3>🚀 <b>Protect Your Digital Life with AI</b></h3>
-⭐ Star this repository • 🐛 Report Issues • 🔧 Contribute
 
+<p align="center">
+Fork the repository • Create a feature branch • Commit changes • Submit PR  
+We welcome improvements and new ideas 🚀
+</p>
+
+<br>
+
+<div align="center">
+<h2>📜 <b>License</b></h2>
+MIT License
+</div>
+
+<br>
+
+<div align="center">
+<h3>🚀 <b>Protect Your Digital Life with AI</b></h3>
+⭐ Star this repository • 🐛 Report Issues • 🔧 Contribute  
 <b>LinkBuster AI — Because Security Matters.</b>
-
-</div> ```
+</div>
