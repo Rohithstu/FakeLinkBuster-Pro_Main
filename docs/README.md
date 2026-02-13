@@ -1,145 +1,219 @@
-🛡️ LinkBuster AI - Real-time URL Threat Detection
-https://img.shields.io/badge/AI-Powered%2520Security-blue
-https://img.shields.io/badge/Python-3.9%252B-green
-https://img.shields.io/badge/Flask-2.3.3-lightgrey
-https://img.shields.io/badge/License-MIT-yellow
+🛡️ LinkBuster AI
+Real-Time AI-Powered URL Threat Detection Platform
 
-LinkBuster AI is an advanced, AI-powered cybersecurity solution that provides real-time URL threat detection, intelligent phishing prevention, and instant security alerts. Protect yourself from malicious websites with cutting-edge machine learning algorithms.
+LinkBuster AI is a full-stack cybersecurity platform designed to detect phishing links, malicious domains, and suspicious URLs in real time. It combines machine learning–based URL analysis, browser-level monitoring, and intelligent alerting to proactively protect users from online threats.
 
-🚀 Live Demo
-🌐 Live Application: https://fakelinkbuster-pro.onrender.com
+🚀 Overview
 
-🔗 Test Dangerous URLs: https://fakelinkbuster-pro.onrender.com/test-dangerous
+Modern phishing attacks evolve rapidly and often bypass traditional blacklist-based systems.
+LinkBuster AI addresses this by combining:
 
-📊 API Status: https://fakelinkbuster-pro.onrender.com/api/status
+Feature-based machine learning detection
 
-✨ Features
-🤖 AI-Powered Threat Detection
-Advanced Pattern Recognition - Detects phishing patterns, suspicious domains, and malicious URLs
+Pattern recognition algorithms
 
-Real-time Analysis - Instant URL scanning with AI algorithms
+Threat intelligence integration
 
-Guaranteed Detection - Specialized detection for Google Safe Browsing test URLs
+Real-time browser extension monitoring
 
-Risk Scoring - 0-100% risk assessment with detailed threat breakdown
+User-level risk analytics dashboard
 
-🎯 Browser Extension
-Real-time Protection - Scans every URL you visit automatically
+The system operates as an end-to-end security solution including backend API services, ML pipeline, database tracking, and browser extension integration.
 
-Visual Warnings - Color-coded risk indicators (Green/Yellow/Red)
+✨ Core Capabilities
+🤖 AI-Powered URL Analysis
 
-One-Click Scanning - Manual scan option for any webpage
+Machine learning-based URL classification
 
-Background Monitoring - Continuous protection without slowing browsing
+Feature extraction (length, entropy, suspicious tokens, domain structure)
 
-📧 Smart Alert System
-Instant Email Alerts - Get notified immediately for high-risk URLs
+Pattern-based phishing detection
 
-AI-Generated Reports - Detailed threat analysis and recommendations
+Risk scoring system (0–100%)
 
-Multi-channel Notifications - Browser alerts + email notifications
+Integration with threat intelligence APIs
+
+Each scanned URL is processed through a structured ML pipeline:
+
+URL → Feature Extraction → Model Prediction → Risk Score → Response
+
+🌐 Browser Extension Protection
+
+Real-time URL scanning
+
+Automatic background monitoring
+
+Visual threat indicators (Green / Yellow / Red)
+
+One-click manual scan option
+
+Lightweight, non-blocking execution
+
+The extension communicates securely with the backend REST API.
 
 📊 Dashboard & Analytics
-Scan History - Complete history of all scanned URLs
 
-Risk Analytics - Visual charts and risk trend analysis
+Complete scan history
 
-User Management - Secure authentication and personalized profiles
+Risk trend visualization
 
-Export Capabilities - Download scan reports
+User authentication & profile management
 
+Detailed threat breakdown reports
+
+Exportable scan summaries
+
+📧 Intelligent Alert System
+
+Automated high-risk email notifications
+
+AI-generated threat explanation reports
+
+Multi-channel alerts (browser + email)
+
+Customizable alert thresholds
+
+🏗️ System Architecture
+User
+   ↓
+Browser Extension
+   ↓
+Flask REST API
+   ↓
+ML Model (Scikit-learn)
+   ↓
+SQLite Database
+   ↓
+Dashboard & Alerts
+
+Architecture Layers
+Layer	Responsibility
+Frontend	Dashboard UI & User Interaction
+Extension	Real-time URL monitoring
+Backend	API handling & business logic
+ML Layer	Threat classification
+Database	User data & scan logs
 🛠️ Technology Stack
 Backend
-Python 3.9+ - Core programming language
 
-Flask - Web framework and API development
+Python 3.9+
 
-Scikit-learn - Machine learning algorithms
+Flask (REST API)
 
-NumPy/Pandas - Data processing and analysis
+Scikit-learn (ML model)
 
-SQLite - Database for user data and scan history
+NumPy / Pandas (data processing)
+
+SQLite (lightweight database)
 
 Frontend
-HTML5/CSS3 - Responsive web interface
 
-JavaScript - Interactive dashboard features
+HTML5 / CSS3
 
-Jinja2 Templates - Dynamic content rendering
+JavaScript
+
+Jinja2 templating
 
 Security & APIs
-Google Safe Browsing API - Enhanced threat intelligence
 
-SMTP2Go - Reliable email delivery
+Google Safe Browsing API (threat intelligence)
 
-CORS Enabled - Browser extension compatibility
+SMTP2Go (email delivery)
 
-RESTful APIs - Clean API architecture
+CORS-enabled API for extension compatibility
+
+📈 Performance Benchmarks
+Metric	Value
+Average Scan Time	< 2 seconds
+Detection Accuracy	~95% (known datasets)
+Concurrent Handling	1000+ requests (tested locally)
+Deployment Uptime	99%+ (controlled environment)
+🔐 Privacy & Security Principles
+
+HTTPS-only communication
+
+Secure authentication system
+
+Controlled API access
+
+Minimal data retention policy
+
+Transparent ML logic
 
 🚀 Quick Start
-Prerequisites
-Python 3.9 or higher
+1️⃣ Clone Repository
+git clone https://github.com/Rohithstu/FakeLinkBuster-Pro_Main.git
+cd FakeLinkBuster-Pro_Main
 
-Git
+2️⃣ Backend Setup
+cd backend
+pip install -r requirements.txt
+python app_upgraded.py
 
-Modern web browser
+3️⃣ Load Browser Extension
+
+Open Chrome → Extensions
+
+Enable Developer Mode
+
+Click "Load Unpacked"
+
+Select browser-extension folder
+
+🧠 Machine Learning Pipeline
+
+Data Collection
+
+Feature Engineering
+
+Model Training
+
+Model Serialization
+
+Real-Time Prediction API
+
+Model scripts available in:
+
+/model
+
+🧪 Future Improvements
+
+Deep learning-based URL embeddings
+
+Cloud deployment (AWS / Azure)
+
+Redis caching for performance
+
+JWT-based authentication
+
+Docker containerization
+
+CI/CD pipeline integration
 
 🤝 Contributing
-We welcome contributions! Please feel free to submit pull requests, report bugs, or suggest new features.
 
-Development Setup
+We welcome contributions.
+
 Fork the repository
 
 Create a feature branch
 
-Make your changes
-
-Test thoroughly
+Commit changes
 
 Submit a pull request
 
-📊 Performance Metrics
-Scan Speed: < 2 seconds per URL
-
-Accuracy: 95%+ on known threat patterns
-
-Uptime: 99.9% on production deployment
-
-Scalability: Handles 1000+ concurrent users
-
-🛡️ Privacy & Security
-No Data Storage: URLs are not permanently stored
-
-Local Processing: AI analysis happens on your machine
-
-Encrypted Communications: All API calls use HTTPS
-
-Open Source: Transparent code for security verification
-
-📞 Support
-Documentation: GitHub Wiki
-
-Issues: GitHub Issues
-
-Email: rohith23241a6731@grietcollege.com
-
 📜 License
-This project is licensed under the MIT License - see the LICENSE file for details.
 
-🙏 Acknowledgments
-Google Safe Browsing API for threat intelligence
+MIT License
 
-SMTP2Go for reliable email delivery
+📬 Contact
 
-Flask community for excellent web framework
-
-Open-source machine learning libraries
+Kamidi Rohith Reddy
+Email: reddykrohith7@gmail.com.com
 
 <div align="center">
-🚀 Protect your digital life with AI-powered security
+🔐 Building Safer Browsing with AI
 
-LinkBuster AI - Because your safety comes first
-
-⭐ Star this repo • 🐛 Report issues • 🔧 Contribute
+⭐ Star this repository • 🐛 Report Issues • 🔧 Contribute
 
 </div>
