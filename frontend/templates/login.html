@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - LinkBuster AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+    }
+    
+    body {
+      background: var(--dark-gradient);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      animation: floatUp 8s linear infinite;
+    }
+    
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+      z-index: -1;
+    }
+    
+    .glass-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 35px 60px rgba(0, 0, 0, 0.4);
+    }
+    
+    .login-header {
+      padding: 40px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    
+    .ai-robot {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: glow 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
+    }
+    
+    @keyframes glow {
+      from { transform: scale(1); text-shadow: 0 0 20px rgba(102, 126, 234, 0.8); }
+      to { transform: scale(1.1); text-shadow: 0 0 30px rgba(102, 126, 234, 1); }
+    }
+    
+    .login-body {
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 30px;
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #667eea;
+      z-index: 3;
+    }
+    
+    .form-control {
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
+      padding: 15px 20px 15px 50px;
+      background: transparent;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+    
+    .form-control:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+      background: rgba(102, 126, 234, 0.05);
+    }
+    
+    .btn-login {
+      background: var(--primary-gradient);
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-login:hover::before {
+      left: 100%;
+    }
+    
+    .btn-login:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+    
+    .form-check-input:checked {
+      background-color: #667eea;
+      border-color: #667eea;
+    }
+    
+    .forgot-link {
+      color: #667eea;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .forgot-link:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+    
+    .divider {
+      text-align: center;
+      margin: 30px 0;
+      position: relative;
+    }
+    
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e0e0e0;
+    }
+    
+    .divider span {
+      background: white;
+      padding: 0 15px;
+      color: #666;
+    }
+    
+    .social-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #666;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .social-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .social-btn.google:hover { border-color: #db4437; color: #db4437; }
+    .social-btn.github:hover { border-color: #333; color: #333; }
+    .social-btn.linkedin:hover { border-color: #0077b5; color: #0077b5; }
+    
+    .security-features {
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .feature-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-right: 15px;
+    }
+    
+    .pulse-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      border-radius: 50%;
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    
+    @keyframes pulse-ring {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <!-- Animated Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5">
+          <div class="glass-card" data-aos="flip-up" data-aos-duration="1000">
+            <div class="login-header">
+              <div class="ai-robot">🤖</div>
+              <h2 class="mb-3">Welcome Back</h2>
+              <p class="opacity-75">Sign in to your LinkBuster AI account</p>
+            </div>
+            
+            <div class="login-body">
+              <form method="POST" action="/login" id="loginForm">
+                <div class="input-group">
+                  <i class="input-icon fas fa-envelope"></i>
+                  <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+                </div>
+                
+                <div class="input-group">
+                  <i class="input-icon fas fa-lock"></i>
+                  <input type="password" name="password" class="form-control" placeholder="Password" required>
+                </div>
+                
+                <div class="remember-forgot">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remember">
+                    <label class="form-check-label" for="remember">Remember me</label>
+                  </div>
+                  <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-login">
+                  <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                </button>
+              </form>
+              
+              <div class="divider">
+                <span>or continue with</span>
+              </div>
+              
+              <div class="social-buttons">
+                <a href="#" class="social-btn google">
+                  <i class="fab fa-google me-2"></i>Google
+                </a>
+                <a href="#" class="social-btn github">
+                  <i class="fab fa-github me-2"></i>GitHub
+                </a>
+                <a href="#" class="social-btn linkedin">
+                  <i class="fab fa-linkedin me-2"></i>LinkedIn
+                </a>
+              </div>
+              
+              <div class="security-features">
+                <h6 class="mb-3"><i class="fas fa-shield-alt me-2"></i>Secure Login</h6>
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                  </div>
+                  <div>
+                    <small class="d-block">End-to-end encryption</small>
+                    <small class="text-muted">Your data is always secure</small>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <i class="fas fa-user-shield"></i>
+                  </div>
+                  <div>
+                    <small class="d-block">2FA ready</small>
+                    <small class="text-muted">Extra layer of security</small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-center mt-4">
+                <p class="mb-0">Don't have an account? <a href="/signup" class="text-primary fw-bold">Sign Up</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init();
+    
+    // Create animated particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random properties
+        const size = Math.random() * 3 + 1;
+        const posX = Math.random() * 100;
+        const delay = Math.random() * 8;
+        const duration = Math.random() * 10 + 5;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Form submission animation
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      const btn = this.querySelector('button[type="submit"]');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
+      btn.disabled = true;
+      
+      // Simulate loading animation
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
+      }, 2000);
+    });
+    
+    // Input focus effects
+    document.querySelectorAll('.form-control').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', function() {
+        if (this.value === '') {
+          this.parentElement.classList.remove('focused');
+        }
+      });
+    });
+    
+    // Initialize particles on load
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+      
+      // Add continuous particle generation
+      setInterval(() => {
+        createParticles();
+      }, 5000);
+    });
+    
+    // Mouse move parallax effect
+    document.addEventListener('mousemove', function(e) {
+      const card = document.querySelector('.glass-card');
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+  </script>
+</body>
+</html>

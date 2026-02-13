@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - LinkBuster AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --success-gradient: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+      --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      --neon-glow: 0 0 20px rgba(102, 126, 234, 0.5);
+    }
+    
+    body {
+      background: var(--dark-gradient);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .shape:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      left: 80%;
+      animation-delay: 2s;
+    }
+    
+    .shape:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      top: 80%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    .auth-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .auth-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+    
+    .auth-header {
+      background: var(--primary-gradient);
+      padding: 40px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    
+    .auth-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+      background-size: cover;
+    }
+    
+    .ai-robot {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .auth-body {
+      padding: 40px;
+    }
+    
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+    
+    .form-control {
+      border: none;
+      border-bottom: 2px solid #e0e0e0;
+      border-radius: 0;
+      padding: 15px 0;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-bottom-color: #667eea;
+      box-shadow: none;
+      background: transparent;
+    }
+    
+    .form-label {
+      position: absolute;
+      top: 15px;
+      left: 0;
+      transition: all 0.3s ease;
+      color: #666;
+      pointer-events: none;
+    }
+    
+    .form-control:focus + .form-label,
+    .form-control:not(:placeholder-shown) + .form-label {
+      top: -15px;
+      font-size: 12px;
+      color: #667eea;
+    }
+    
+    .btn-signup {
+      background: var(--success-gradient);
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-signup::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-signup:hover::before {
+      left: 100%;
+    }
+    
+    .btn-signup:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+    }
+    
+    .social-login {
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .social-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      border-radius: 50%;
+    }
+    
+    .social-btn:hover::before {
+      transform: scale(1);
+    }
+    
+    .social-btn.google { background: #db4437; }
+    .social-btn.github { background: #333; }
+    .social-btn.linkedin { background: #0077b5; }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .feature-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      position: relative;
+      padding-left: 30px;
+    }
+    
+    .feature-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    
+    .password-strength {
+      height: 5px;
+      background: #e0e0e0;
+      border-radius: 5px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    
+    .strength-bar {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease, background 0.3s ease;
+      border-radius: 5px;
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .typewriter {
+      overflow: hidden;
+      border-right: 3px solid #667eea;
+      white-space: nowrap;
+      margin: 0 auto;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #667eea }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+    
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="auth-card" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="row g-0">
+              <!-- Left Side - Form -->
+              <div class="col-md-6">
+                <div class="auth-body">
+                  <div class="text-center mb-4">
+                    <div class="ai-robot">🤖</div>
+                    <h3 class="typewriter">Join LinkBuster AI</h3>
+                    <p class="text-muted">Create your secure account</p>
+                  </div>
+                  
+                  <form method="POST" action="/signup" id="signupForm">
+                    <div class="form-group">
+                      <input type="email" name="email" class="form-control" placeholder=" " required>
+                      <label class="form-label"><i class="fas fa-envelope me-2"></i>Email Address</label>
+                    </div>
+                    
+                    <div class="form-group">
+                      <input type="password" name="password" id="password" class="form-control" placeholder=" " required>
+                      <label class="form-label"><i class="fas fa-lock me-2"></i>Password</label>
+                      <div class="password-strength">
+                        <div class="strength-bar" id="passwordStrength"></div>
+                      </div>
+                      <small class="text-muted" id="passwordHint">Password strength indicator</small>
+                    </div>
+                    
+                    <div class="form-group">
+                      <input type="password" id="confirmPassword" class="form-control" placeholder=" " required>
+                      <label class="form-label"><i class="fas fa-lock me-2"></i>Confirm Password</label>
+                      <small class="text-muted" id="passwordMatch"></small>
+                    </div>
+                    
+                    <div class="form-check mb-4">
+                      <input class="form-check-input" type="checkbox" id="terms" required>
+                      <label class="form-check-label" for="terms">
+                        I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+                      </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-signup w-100 pulse">
+                      <i class="fas fa-rocket me-2"></i>Create Account
+                    </button>
+                  </form>
+                  
+                  <div class="social-login">
+                    <p class="text-muted">Or sign up with</p>
+                    <div>
+                      <a href="#" class="social-btn google">
+                        <i class="fab fa-google"></i>
+                      </a>
+                      <a href="#" class="social-btn github">
+                        <i class="fab fa-github"></i>
+                      </a>
+                      <a href="#" class="social-btn linkedin">
+                        <i class="fab fa-linkedin"></i>
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div class="text-center">
+                    <p class="mb-0">Already have an account? <a href="/login" class="text-primary fw-bold">Sign In</a></p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Right Side - Features -->
+              <div class="col-md-6 d-none d-md-block">
+                <div class="auth-header h-100 d-flex align-items-center justify-content-center">
+                  <div>
+                    <h4 class="mb-4">Why Join LinkBuster AI?</h4>
+                    <ul class="feature-list">
+                      <li>Advanced AI Threat Detection</li>
+                      <li>Real-time URL Analysis</li>
+                      <li>Smart Security Alerts</li>
+                      <li>Comprehensive Scan History</li>
+                      <li>Enterprise-grade Security</li>
+                      <li>24/7 Protection</li>
+                    </ul>
+                    <div class="mt-4">
+                      <div class="d-flex align-items-center text-white-50 mb-2">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        <span>Military-grade Encryption</span>
+                      </div>
+                      <div class="d-flex align-items-center text-white-50 mb-2">
+                        <i class="fas fa-bolt me-2"></i>
+                        <span>Lightning Fast Scans</span>
+                      </div>
+                      <div class="d-flex align-items-center text-white-50">
+                        <i class="fas fa-brain me-2"></i>
+                        <span>Machine Learning Powered</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init();
+    
+    // Password strength indicator
+    document.getElementById('password').addEventListener('input', function() {
+      const password = this.value;
+      const strengthBar = document.getElementById('passwordStrength');
+      const hint = document.getElementById('passwordHint');
+      
+      let strength = 0;
+      let hints = [];
+      
+      if (password.length >= 8) strength += 25;
+      if (/[A-Z]/.test(password)) strength += 25;
+      if (/[0-9]/.test(password)) strength += 25;
+      if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+      
+      strengthBar.style.width = strength + '%';
+      
+      if (strength < 25) {
+        strengthBar.style.background = '#ff4757';
+        hint.textContent = 'Very weak password';
+        hint.style.color = '#ff4757';
+      } else if (strength < 50) {
+        strengthBar.style.background = '#ffa502';
+        hint.textContent = 'Weak password';
+        hint.style.color = '#ffa502';
+      } else if (strength < 75) {
+        strengthBar.style.background = '#2ed573';
+        hint.textContent = 'Good password';
+        hint.style.color = '#2ed573';
+      } else {
+        strengthBar.style.background = '#1e90ff';
+        hint.textContent = 'Strong password!';
+        hint.style.color = '#1e90ff';
+      }
+    });
+    
+    // Password confirmation check
+    document.getElementById('confirmPassword').addEventListener('input', function() {
+      const password = document.getElementById('password').value;
+      const confirmPassword = this.value;
+      const matchText = document.getElementById('passwordMatch');
+      
+      if (confirmPassword === '') {
+        matchText.textContent = '';
+      } else if (password === confirmPassword) {
+        matchText.textContent = 'Passwords match!';
+        matchText.style.color = '#2ed573';
+      } else {
+        matchText.textContent = 'Passwords do not match';
+        matchText.style.color = '#ff4757';
+      }
+    });
+    
+    // Form submission animation
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      const btn = this.querySelector('button[type="submit"]');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+      btn.disabled = true;
+    });
+    
+    // Floating shapes interaction
+    document.addEventListener('mousemove', function(e) {
+      const shapes = document.querySelectorAll('.shape');
+      shapes.forEach(shape => {
+        const speed = shape.getAttribute('data-speed') || 5;
+        const x = (window.innerWidth - e.pageX * speed) / 100;
+        const y = (window.innerHeight - e.pageY * speed) / 100;
+        shape.style.transform = `translateX(${x}px) translateY(${y}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
