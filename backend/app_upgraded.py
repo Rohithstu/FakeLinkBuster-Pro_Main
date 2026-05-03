@@ -569,6 +569,38 @@ def cleanup_old_records():
 def index():
     return render_template('index.html')
 
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    
+    email = session['user']
+    conn = sqlite3.connect(HISTORY_DB)
+    cursor = conn.cursor()
+    
+    # Get scan statistics
+    cursor.execute("SELECT COUNT(*) FROM history WHERE email = ?", (email,))
+    total_scans = cursor.fetchone()[0]
+    
+    cursor.execute("SELECT COUNT(*) FROM history WHERE email = ? AND (status = 'Critical' OR status = 'High Risk' OR status = 'Suspicious')", (email,))
+    threats_found = cursor.fetchone()[0]
+    
+    cursor.execute("SELECT COUNT(*) FROM history WHERE email = ? AND status = 'Safe'", (email,))
+    safe_scans = cursor.fetchone()[0]
+    
+    cursor.execute("SELECT MIN(time) FROM history WHERE email = ?", (email,))
+    first_scan = cursor.fetchone()[0]
+    conn.close()
+    
+    member_since = first_scan if first_scan else datetime.now().strftime("%Y-%m-%d")
+    
+    return render_template('profile.html', 
+                         email=email, 
+                         total_scans=total_scans,
+                         threats_found=threats_found,
+                         safe_scans=safe_scans,
+                         member_since=member_since)
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - LinkBuster AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --dark-bg: #0f0f23;
+      --card-bg: #1a1a2e;
+      --text-light: #ffffff;
+      --text-muted: #8b8b9e;
+      --accent-blue: #00d4ff;
+      --accent-purple: #a855f7;
+    }
+
+    body {
+      background: var(--dark-bg);
+      color: var(--text-light);
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(255, 119, 198, 0.05) 0%, transparent 50%);
+    }
+
+    .navbar {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      z-index: 1050;
+    }
+
+    .profile-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .profile-hero {
+      background: linear-gradient(135deg, var(--card-bg) 0%, #16213e 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .profile-banner {
+      height: 140px;
+      background: var(--primary-gradient);
+      position: relative;
+    }
+
+    .profile-banner::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to top, var(--card-bg), transparent);
+    }
+
+    .profile-info {
+      padding: 0 40px 40px;
+      position: relative;
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      border: 4px solid var(--card-bg);
+      margin-top: -50px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .profile-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-top: 15px;
+      background: linear-gradient(45deg, #fff, var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .profile-email {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-top: 5px;
+    }
+
+    .profile-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      background: rgba(0, 212, 255, 0.15);
+      color: var(--accent-blue);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 12px;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, var(--card-bg) 0%, #16213e 100%);
+      border-radius: 18px;
+      padding: 25px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-box .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-box .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    .info-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, #16213e 100%);
+      border-radius: 18px;
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 30px;
+    }
+
+    .info-card h5 {
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-row .label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .info-row .value {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .btn-back {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-back:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      transform: translateX(-4px);
+    }
+
+    .btn-logout {
+      background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+      border: none;
+      color: #fff;
+      padding: 12px 32px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-logout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 65, 108, 0.4);
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-info {
+        padding: 0 20px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark py-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/dashboard">
+        <i class="fas fa-robot me-2" style="color: var(--accent-blue);"></i>
+        <strong style="background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LinkBuster AI</strong>
+      </a>
+      <a href="/dashboard" class="btn-back">
+        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+      </a>
+    </div>
+  </nav>
+
+  <!-- Profile Content -->
+  <div class="profile-container">
+    <!-- Profile Hero -->
+    <div class="profile-hero">
+      <div class="profile-banner"></div>
+      <div class="profile-info">
+        <div class="profile-avatar">{{ email[0]|upper }}</div>
+        <div class="profile-name">{{ email.split('@')[0]|title }}</div>
+        <div class="profile-email"><i class="fas fa-envelope me-2"></i>{{ email }}</div>
+        <div class="profile-badge"><i class="fas fa-shield-alt me-1"></i> Security Analyst</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-number">{{ total_scans }}</div>
+        <div class="stat-label"><i class="fas fa-search me-1"></i> Total Scans</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ threats_found }}</div>
+        <div class="stat-label"><i class="fas fa-exclamation-triangle me-1"></i> Threats Found</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ safe_scans }}</div>
+        <div class="stat-label"><i class="fas fa-check-circle me-1"></i> Safe URLs</div>
+      </div>
+    </div>
+
+    <!-- Account Info -->
+    <div class="info-card">
+      <h5><i class="fas fa-user-cog me-2"></i>Account Information</h5>
+      <div class="info-row">
+        <span class="label">Email Address</span>
+        <span class="value">{{ email }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Account Status</span>
+        <span class="value" style="color: #00b894;"><i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i> Active</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Security Level</span>
+        <span class="value" style="color: var(--accent-blue);">AI-Enhanced Protection</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Member Since</span>
+        <span class="value">{{ member_since }}</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="/dashboard" class="btn-back">
+        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+      </a>
+      <a href="/logout" class="btn-logout">
+        <i class="fas fa-sign-out-alt me-2"></i>Logout
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

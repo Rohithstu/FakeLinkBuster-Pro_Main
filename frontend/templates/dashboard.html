@@ -689,6 +689,85 @@
         radial-gradient(circle at 90% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 40%);
     }
 
+    /* Navbar & Dropdown Fixes */
+    .navbar {
+      position: relative;
+      z-index: 1050;
+    }
+
+    .navbar .dropdown-menu {
+      z-index: 1060;
+      background: rgba(20, 20, 45, 0.98) !important;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      padding: 10px 0;
+      min-width: 220px;
+      margin-top: 8px;
+    }
+
+    .navbar .dropdown-menu .dropdown-item {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      margin: 2px 8px;
+      color: #c8c8d8;
+    }
+
+    .navbar .dropdown-menu .dropdown-item:hover {
+      background: rgba(102, 126, 234, 0.2);
+      color: #fff;
+      transform: translateX(4px);
+    }
+
+    .navbar .dropdown-menu .dropdown-item.text-danger:hover {
+      background: rgba(255, 65, 108, 0.2);
+      color: #ff416c;
+    }
+
+    .navbar .dropdown-menu .dropdown-divider {
+      border-color: rgba(255,255,255,0.1);
+      margin: 6px 0;
+    }
+
+    .navbar .dropdown-toggle::after {
+      margin-left: 8px;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-right: 8px;
+    }
+
+    .profile-header {
+      padding: 20px 20px 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 5px;
+    }
+
+    .profile-header .user-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .profile-header .user-email {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
     .ai-detector-navbar {
       background: rgba(21, 21, 43, 0.95) !important;
       backdrop-filter: blur(20px);
@@ -707,15 +786,27 @@
           <strong style="background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LinkBuster AI</strong>
         </a>
         
-        <div class="navbar-nav ms-auto">
+        <div class="navbar-nav ms-auto d-flex align-items-center">
           <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-              <i class="fas fa-user-shield me-1" style="color: var(--accent-blue);"></i> 
-              <span style="background: linear-gradient(45deg, #fff, var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{ session['user'] }}</span>
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="user-avatar">{{ session['user'][0]|upper }}</span>
+              <span style="background: linear-gradient(45deg, #fff, var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;">{{ session['user'] }}</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
-              <li><a class="dropdown-item" href="#"><i class="fas fa-users me-2"></i>Team</a></li>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown">
+              <li>
+                <div class="profile-header">
+                  <div class="d-flex align-items-center">
+                    <span class="user-avatar" style="width: 40px; height: 40px; font-size: 1rem;">{{ session['user'][0]|upper }}</span>
+                    <div>
+                      <div class="user-name">{{ session['user'] }}</div>
+                      <div class="user-email">Signed in</div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li><a class="dropdown-item" href="/profile"><i class="fas fa-user-circle me-2" style="color: var(--accent-blue);"></i>My Profile</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2" style="color: var(--accent-purple);"></i>Settings</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-chart-bar me-2" style="color: #00b894;"></i>My Statistics</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
             </ul>
