@@ -1,7 +1,12 @@
 import sqlite3
+import os
+
+# Use absolute path for database
+current_dir = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(current_dir, 'users.db')
 
 # Connect to the database (or create it)
-conn = sqlite3.connect('users.db')
+conn = sqlite3.connect(db_path)
 
 # Create a cursor
 cursor = conn.cursor()
@@ -19,4 +24,4 @@ CREATE TABLE IF NOT EXISTS users (
 conn.commit()
 conn.close()
 
-print("Database and users table created.")
+print(f"Database and users table created at {db_path}")

@@ -13,12 +13,18 @@ from urllib.parse import urlparse
 import warnings
 warnings.filterwarnings('ignore')
 
-# Set the correct template path
+# Set the correct template and static paths
 current_dir = os.path.dirname(os.path.abspath(__file__))
 frontend_templates_path = os.path.join(current_dir, '..', 'frontend', 'templates')
+frontend_static_path = os.path.join(current_dir, '..', 'frontend', 'static')
 
-app = Flask(__name__, template_folder=frontend_templates_path)
-app.secret_key = "supersecretkey"
+# Absolute paths for SQLite databases (critical for production/Render)
+DB_DIR = current_dir
+USERS_DB = os.path.join(DB_DIR, 'users.db')
+HISTORY_DB = os.path.join(DB_DIR, 'history.db')
+
+app = Flask(__name__, template_folder=frontend_templates_path, static_folder=frontend_static_path)
+app.secret_key = os.environ.get("SECRET_KEY", "supersecretkey")
 
 # -------------- CONFIGURATION --------------
 GOOGLE_API_KEY = "AIzaSyD8SUcnII-S1xx35qzpKQGAR8ONHkLZO5E"
@@ -542,7 +548,7 @@ def api_test_connection():
 # -------------- HISTORY MANAGEMENT SOLUTIONS --------------
 def cleanup_old_records():
     """Auto-delete records older than 30 days"""
-    conn = sqlite3.connect('history.db')
+    conn = sqlite3.connect(HISTORY_DB)
     cursor = conn.cursor()
     
     # Delete records older than 30 days
@@ -569,7 +575,7 @@ def signup():
         email = request.form['email']
         password = request.form['password']
 
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(USERS_DB)
         cursor = conn.cursor()
         try:
             cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", (email, password))
@@ -589,7 +595,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        conn = sqlite3.connect('users.db')
+        conn = sqlite3.connect(USERS_DB)
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE email = ? AND password = ?", (email, password))
         user = cursor.fetchone()
@@ -609,7 +615,7 @@ def dashboard():
         return redirect(url_for('login'))
 
     email = session['user']
-    conn = sqlite3.connect('history.db')
+    conn = sqlite3.connect(HISTORY_DB)
     cursor = conn.cursor()
     
     # Get total count for pagination
@@ -752,7 +758,7 @@ def ai_scan():
     }
 
     # Save to database
-    conn = sqlite3.connect('history.db')
+    conn = sqlite3.connect(HISTORY_DB)
     cursor = conn.cursor()
     cursor.execute("INSERT INTO history (email, url, score, status, time) VALUES (?, ?, ?, ?, ?)",
                    (user_email, url, risk_score, status, time))
@@ -927,7 +933,7 @@ if __name__ == '__main__':
     import sqlite3
     
     # Create users table
-    conn = sqlite3.connect('users.db')
+    conn = sqlite3.connect(USERS_DB)
     cursor = conn.cursor()
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
@@ -940,7 +946,7 @@ if __name__ == '__main__':
     conn.close()
     
     # Create history table
-    conn = sqlite3.connect('history.db')
+    conn = sqlite3.connect(HISTORY_DB)
     cursor = conn.cursor()
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS history (

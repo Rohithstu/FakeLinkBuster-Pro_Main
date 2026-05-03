@@ -1,7 +1,12 @@
 import sqlite3
+import os
+
+# Use absolute path for database
+current_dir = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(current_dir, 'history.db')
 
 # Connect to a new or existing database
-conn = sqlite3.connect('history.db')
+conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
 # Create the scan history table
@@ -19,4 +24,4 @@ CREATE TABLE IF NOT EXISTS history (
 conn.commit()
 conn.close()
 
-print("✅ history table created.")
+print(f"✅ history table created at {db_path}")
